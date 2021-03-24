@@ -4,16 +4,37 @@
 
 Initializing git folder
     1. In CodingNomads folder, create new folder git_practice
+    Nicholass-MBP-2:CodingNomads ncummons$ mkdir git_practice
     2. Inside git_practice:
         a. Initialize folder as a git folder (make sure you are in the correct folder when initializing) by running
             the "git init" command within the git_practice folder.
+            Nicholass-MBP-2:git_practice ncummons$ git init
+            Initialized empty Git repository in /Users/ncummons/Documents/CodingNomads/git_practice/.git/
         b. Make new file
+        Nicholass-MBP-2:git_practice ncummons$ touch Practice_file.txt
         c. Add file
+        Nicholass-MBP-2:git_practice ncummons$ git add Practice_file.txt
         d. Commit file
+        Nicholass-MBP-2:git_practice ncummons$ git commit -m "Creating a practice file"
+        [master (root-commit) 7ed9c0d] Creating a practice file
+         1 file changed, 0 insertions(+), 0 deletions(-)
+         create mode 100644 Practice_file.txt
         c. On Github, create new git_practice repository
         d. Add this new GitHub repository as a new "remote" to your local Git repo. You can do this by using the command
             git remote add <ANY_NAME> <URL_OF_NEW_GITHUB_REPO.git>
+            git remote add practice https://github.com/ncummons/git_practice.git
         d. Push commit file to Github
+        Nicholass-MBP-2:git_practice ncummons$ git commit -m "Practicing"
+        [master 81132e7] Practicing
+         1 file changed, 5 insertions(+)
+        Nicholass-MBP-2:git_practice ncummons$ git push
+        Counting objects: 3, done.
+        Delta compression using up to 8 threads.
+        Compressing objects: 100% (2/2), done.
+        Writing objects: 100% (3/3), 325 bytes | 325.00 KiB/s, done.
+        Total 3 (delta 0), reused 0 (delta 0)
+        To https://github.com/ncummons/git_practice.git
+           7ed9c0d..81132e7  master -> master
         e. Practice the following git flow until you feel comfortable:
             i.   Create or modify file
             ii.  Add file(s)
@@ -24,11 +45,36 @@ Adding a remote
     1. Create new personal repository on Github named "git_practice_2".
     2. On local machine, add the new remote address to the same git repo you were working with in the previous section above
         (directions are provided on Github with new repo is created)
+        Nicholass-MBP-2:git_practice ncummons$ git remote add practice2 https://github.com/ncummons/git_practice_2.git
     3. Push local git repository to your Github using the new remote.
+    Nicholass-MBP-2:git_practice ncummons$ git push practice2 master
+    Counting objects: 9, done.
+    Delta compression using up to 8 threads.
+    Compressing objects: 100% (5/5), done.
+    Writing objects: 100% (9/9), 793 bytes | 793.00 KiB/s, done.
+    Total 9 (delta 0), reused 0 (delta 0)
+    To https://github.com/ncummons/git_practice_2.git
+     * [new branch]      master -> master
 
 Cloning repository from Github
     1. Find a repository on Github
     2. Clone repository to local machine
+  Nicholass-MBP-2:git_practice ncummons$ git clone https://github.com/CodingNomads/JavaFundamentalsIn90Minutes.git
+  Cloning into 'JavaFundamentalsIn90Minutes'...
+  remote: Enumerating objects: 109, done.
+  remote: Total 109 (delta 0), reused 0 (delta 0), pack-reused 109
+  Receiving objects: 100% (109/109), 30.65 KiB | 1.13 MiB/s, done.
+  Resolving deltas: 100% (22/22), done.
     3. Create new repository on Github
     4. Add new remote on local machine
+    Nicholass-MBP-2:git_practice ncummons$ git remote add practice3 https://github.com/ncummons/git_practice_3.git
     5. Push to new Github repository
+    Nicholass-MBP-2:git_practice ncummons$ git push practice3 master
+    Counting objects: 70, done.
+    Delta compression using up to 8 threads.
+    Compressing objects: 100% (58/58), done.
+    Writing objects: 100% (70/70), 25.09 KiB | 8.36 MiB/s, done.
+    Total 70 (delta 3), reused 52 (delta 3)
+    remote: Resolving deltas: 100% (3/3), done.
+    To https://github.com/ncummons/git_practice_3.git
+     * [new branch]      master -> master
