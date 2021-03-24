@@ -2,21 +2,51 @@ Fundamentals Exercise 1: CLI
      Perform the following tasks using the CLI and copy and paste the commands and results below
 
      1. Navigate to CodingNomads folder (or the space you have create for this project)
+     Nicholass-MBP-2:/ ncummons$ cd Users/ncummons/Documents/CodingNomads/
      2. Create new folder Terminal_testing
+     Nicholass-MBP-2:CodingNomads ncummons$ mkdir Terminal_testing
+     Nicholass-MBP-2:CodingNomads ncummons$ ls
+     Short_Examples		labs			resources
+     Terminal_testing	projects
      3. Inside of folder Terminal_testing,
          a. create 3 new .txt files all with different names
+         Nicholass-MBP-2:Terminal_testing ncummons$ touch File1.txt File2.txt File3.txt
          b. print the directory path
+         Nicholass-MBP-2:Terminal_testing ncummons$ pwd
+         /Users/ncummons/Documents/CodingNomads/Terminal_testing
          c. list the contents of the folder
+         Nicholass-MBP-2:Terminal_testing ncummons$ ls
+         File1.txt	File2.txt	File3.txt
      5. Inside of folder Terminal_testing, create a new folder
+     Nicholass-MBP-2:Terminal_testing ncummons$ mkdir New_testing_folder
      6. Copy a file from Terminal_testing to the new folder
+     cp File2.txt New_testing_folder/
      7. Move a different file from Terminal_testing to the new folder
+     Nicholass-MBP-2:Terminal_testing ncummons$ mv File3.txt New_testing_folder/
      8. Demonstrate removing:
          a. A file
+         cd New_testing_folder/
+         Nicholass-MBP-2:New_testing_folder ncummons$ ls
+         File2.txt	File3.txt
+         Nicholass-MBP-2:New_testing_folder ncummons$ rm -f File2.txt
+         Nicholass-MBP-2:New_testing_folder ncummons$ ls
+         File3.txt
          b. A folder
+         Nicholass-MBP-2:New_testing_folder ncummons$ cd ../
+         Nicholass-MBP-2:Terminal_testing ncummons$ ls
+         File1.txt		File2.txt		New_testing_folder
+         Nicholass-MBP-2:Terminal_testing ncummons$ rm -r New_testing_folder/
+         Nicholass-MBP-2:Terminal_testing ncummons$ ls
+         File1.txt	File2.txt
      9. CHALLENGE:
          a. Use $ vim to write some text inside a file
+         Nicholass-MBP-2:Terminal_testing ncummons$ vim File1.txt
          b. Use $ cat print contents of file
+          Nicholass-MBP-2:Terminal_testing ncummons$ cat File1.txt
+                  Here is some text in the file! Isn't this cool?
          c. Use $ grep to search for a word inside file
+         Nicholass-MBP-2:Terminal_testing ncummons$ grep cool File1.txt -i
+         Here is some text in the file! Isn't this cool?
 
 Example Output (pwd):
     1. Cadens-MacBook-Pro:CodingNomads cadenmackenzie$ pwd
