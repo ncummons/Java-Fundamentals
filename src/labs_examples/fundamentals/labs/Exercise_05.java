@@ -2,6 +2,7 @@ package labs_examples.fundamentals.labs;
 
 
 import java.sql.SQLOutput;
+import java.util.Locale;
 
 /**
  * Fundamentals Exercise 5: Working with Strings
@@ -34,6 +35,11 @@ public class Exercise_05 {
         System.out.println(str2.contains("lo"));
         boolean str2Boolean = str2.contains("lo");
         System.out.println(str2Boolean);
+        System.out.println(str3.toUpperCase(Locale.ROOT));
+        String str4 = "Oh, this is a great string.";
+        System.out.println(str4.substring(0,5));
+        System.out.println("Oops, I feel like that got cut off short... Let me try again.");
+        System.out.println(str4);
     }
 
 
