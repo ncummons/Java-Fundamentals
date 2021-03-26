@@ -1,4 +1,4 @@
-package labs_examples.fundamentals.examples;
+package labs_examples.fundamentals.examples.Variables;
 
 public class Person {
     String name;
