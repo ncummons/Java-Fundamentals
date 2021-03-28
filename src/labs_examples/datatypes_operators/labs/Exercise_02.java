@@ -24,6 +24,14 @@ public class Exercise_02 {
     public static void main(String[] args) {
 
         // write code here
+        int x = 10;
+        double d = x;
+        System.out.println("The new double from int x = 10 is: " + d);
+
+        double u = 10.5;
+        int y = (int) u;
+        System.out.println("The new int from double u = 10.5 is: " + y);
+        System.out.println("Information is lost in narrowing conversions. \nI.e. when the variable needs to be explicitly casted.");
 
     }
 }
