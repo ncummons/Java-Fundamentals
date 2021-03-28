@@ -24,6 +24,16 @@ public class Exercise_07 {
         int days = scanner.nextInt();
 
         // write completed code here
-
+        if ((days >= 1) & (days <= 1000000)){
+            float hours = days * 60;
+            System.out.println("The number of hours in that many days is: " + hours);
+            double minutes = hours * 60;
+            System.out.println("The number of minutes that many hours is: " + minutes);
+            double seconds = minutes * 60;
+            System.out.println("The number of seconds in that many minutes is: " + seconds);
+        }
+        if ((days < 1) | (days > 1000000)){
+            System.out.println("You did not enter a number between 1 and 1,000,000.");
+        }
     }
 }
