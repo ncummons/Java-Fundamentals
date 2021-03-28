@@ -33,7 +33,7 @@ public class Exercise_07 {
             System.out.println("The number of seconds in that many minutes is: " + seconds);
         }
         if ((days < 1) | (days > 1000000)){
-            System.out.println("You did not enter a number between 1 and 1,000,000.");
+            System.out.println("You did not enter a number between 1 and 1,000,000!");
         }
     }
 }
