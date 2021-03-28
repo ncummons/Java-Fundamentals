@@ -1,4 +1,4 @@
-package labs_examples.fundamentals.examples.variable_scope;
+package labs_examples.datatypes_operators.examples.variable_scope;
 
 public class VariableScope {
 
@@ -14,6 +14,7 @@ public class VariableScope {
         if (myCar.make.equalsIgnoreCase("Toyota")){
             String message = "It's a Toyota!";
             System.out.println(message);
+
         }
 
     }

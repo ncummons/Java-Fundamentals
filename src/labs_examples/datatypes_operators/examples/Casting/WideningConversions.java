@@ -1,4 +1,4 @@
-package labs_examples.fundamentals.examples.Casting;
+package labs_examples.datatypes_operators.examples.Casting;
 
 public class WideningConversions {
 

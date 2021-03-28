@@ -1,4 +1,4 @@
-package labs_examples.fundamentals.examples.variable_scope;
+package labs_examples.datatypes_operators.examples.variable_scope;
 
 // POJO = Plain Old Java Object
 

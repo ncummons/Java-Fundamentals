@@ -2,7 +2,7 @@ package labs_examples.datatypes_operators.examples;
 
 // *** This program will not compile. ***
 class LtoD_2 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         long L;
         double D;
 
@@ -10,6 +10,14 @@ class LtoD_2 {
         //L = D; // Illegal!!!
 
         //System.out.println("L and D: " + L + " " + D);
+
+        // Instead, cast the variable explicitly:
+
+        L = (long) D;
+        System.out.println(D);
+        System.out.println("^^ Double vv Long");
+        System.out.println(L);
+
 
     }
 }

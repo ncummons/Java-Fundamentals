@@ -1,4 +1,4 @@
-package labs_examples.fundamentals.examples.Variables;
+package labs_examples.datatypes_operators.examples.Variables;
 
 public class Variables {
 

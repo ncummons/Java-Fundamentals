@@ -16,10 +16,14 @@ class SCops {
         if(d != 0 && (n % d) == 0)
             System.out.println(d + " is a factor of " + n);
 
+        // Experiment with not and short circuit
+        if(!(d != 0 && (n % d) == 0))
+            System.out.println(d + " is not a factor of " + n);
+
     /* Now, try same thing without short-circuit operator.
-       This will cause a divide-by-zero error.
+       This will cause a divide-by-zero error. Uncomment to run.
     */
-        if(d != 0 & (n % d) == 0)
-            System.out.println(d + " is a factor of " + n);
+      /*  if(d != 0 & (n % d) == 0)
+            System.out.println(d + " is a factor of " + n); */
     }
 }
