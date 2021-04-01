@@ -20,12 +20,33 @@ public class Exercise_07 {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        String vowels = "aeiou";
         char letter;
+        int letterCounter = 0;
 
-        System.out.println("Please type a word here to find its first vowel: ");
+        System.out.println("Please type a word here to find its first vowel (excluding y): ");
 
         String input = scanner.next();
+
+        while(input.length() > 0){
+            letter = input.charAt(letterCounter);
+            if(letter == 'a'){
+                System.out.println("The first vowel is: a\n" + "In the word: " + input);
+            }else if(letter == 'e'){
+                System.out.println("The first vowel is: e\n" + "In the word: " + input);
+            }else if(letter == 'i'){
+                System.out.println("The first vowel is: i\n" + "In the word: " + input);
+            }else if(letter == 'o'){
+                System.out.println("The first vowel is: o\n" + "In the word: " + input);
+            }else if(letter == 'u'){
+                System.out.println("The first vowel is: u\n" + "In the word: " + input);
+            }else{
+                letterCounter++;
+                continue;
+            }
+            input = "";
+        }
+
+        System.out.println("While loop is done.");
 
     }
 
