@@ -20,7 +20,29 @@ public class Exercise_07 {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        char letter;
+
+        String vowels = "aeiou";
+
+        System.out.println("Please type a word here to find its first vowel (excluding y): ");
+
+        String input = scanner.next();
+        int i = 0;
+
+        while(i < input.length()){
+            if(vowels.indexOf(input.charAt(i)) != -1){
+                System.out.println(input.charAt(i));
+                System.out.println(input);
+                break;
+            }else{
+                i++;
+            }
+        }
+
+        System.out.println("While loop is done. I did it!");
+
+       // See below for my first attempt, which was much less efficient:
+
+       /** char letter;
         int letterCounter = 0;
 
         System.out.println("Please type a word here to find its first vowel (excluding y): ");
@@ -46,7 +68,7 @@ public class Exercise_07 {
             input = "";
         }
 
-        System.out.println("While loop is done.");
+        System.out.println("While loop is done."); */
 
     }
 
