@@ -49,5 +49,12 @@ class StrOps {
         idx = str2.lastIndexOf("One");
         System.out.println("Index of last occurence of One: " + idx);
 
+        char[] charArray = new char[str1.length()];
+        charArray = str1.toCharArray();
+        System.out.println(charArray[1]);
+        for(char letter: charArray){
+            System.out.print(letter + "|");
+        }
+
     }
 }
