@@ -87,7 +87,7 @@ class MethodTraining {
         System.out.println(num);
     }
 
-    // Thought of this after, but I could have used a switch statement, right?
+    // Thought of this after, could I have used a switch statement? I'm not entirely sure I could have
     public static int maxValue(int a, int b, int c, int d){
         if(a >= b & a >= c & a >= d){
             return a;
