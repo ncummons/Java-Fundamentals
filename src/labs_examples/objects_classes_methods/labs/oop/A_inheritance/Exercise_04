@@ -1,7 +1,7 @@
 
 Without running the code below, please tell me what it will print.
 
-
+"Child called" will print because the method doSomething() is overridden by the subclass, child.
 
 public class InheritanceTest
 {

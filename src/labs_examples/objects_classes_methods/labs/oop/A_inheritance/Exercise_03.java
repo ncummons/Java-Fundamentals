@@ -3,8 +3,9 @@ package labs_examples.objects_classes_methods.labs.oop.A_inheritance;
 /**
  * Why does the output print in the order it does?
  *
- * You answer:
- *
+ * You answer: Because when an object constructor is called for a subclass, it calls the superclass' constructor(s)
+ *             beginning with the highest superclass in the hierarchy. It must create the members of the higher class
+ *             before it can create subsequent "lower" classes
  */
 
 class A_1 {

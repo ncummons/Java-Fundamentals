@@ -1,8 +1,10 @@
 
 Without running the code below, please tell me what will print. Why?
 
+Parent called
+Child called
 
-
+Because it is calling the superclass' constructor first, then the subclass' constructor.
 
 public class InheritanceTest
 {
