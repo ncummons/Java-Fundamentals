@@ -5,6 +5,15 @@ public class Player {
     private Hand hand;
     private int potValue;
 
+    public boolean computerAIWantsCard(){
+        int scoreHand = this.hand.returnScoreOfHand();
+        if(scoreHand < 16){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public void receiveCard(Card addingCard){
         this.hand.addCard(addingCard);
     }
