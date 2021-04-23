@@ -32,6 +32,13 @@ public class Hand {
             }
     }
 
+    public void printHand(Player owner){
+        System.out.println(owner.getName() + "'s hand contains:");
+        for(int i = 0; i < cards.size(); i++){
+            cards.get(i).printCardName();
+        }
+    }
+
     public ArrayList<Card> getCards() {
         return cards;
     }

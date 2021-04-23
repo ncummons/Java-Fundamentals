@@ -6,6 +6,19 @@ public class Card {
     private static char[] suit = new char[] {'♠', '♦', '♥', '♣'};
     private int cardValue;
     private char cardSuit;
+    private String cardName;
+
+    public void printCardName(){
+        System.out.println(cardName + " of " + cardSuit + "\'s");
+    }
+
+    public String getCardName() {
+        return cardName;
+    }
+
+    public void setCardName(String cardName) {
+        this.cardName = cardName;
+    }
 
     public Card(int cardValue, char cardSuit) {
         this.cardValue = cardValue;
@@ -36,11 +49,5 @@ public class Card {
         this.cardSuit = cardSuit;
     }
 
-    @Override
-    public String toString() {
-        return "Card{" +
-                "cardValue=" + cardValue +
-                ", cardSuit=" + cardSuit +
-                '}';
-    }
+
 }

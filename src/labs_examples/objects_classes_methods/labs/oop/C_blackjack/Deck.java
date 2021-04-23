@@ -18,6 +18,8 @@ public class Deck {
         }
         this.usedCards.add(randNum);
         player.receiveCard(this.cards[randNum]);
+        System.out.print(player.getName() + " has been dealt: ");
+        cards[randNum].printCardName();
         return;
     }
 
@@ -43,6 +45,25 @@ public class Deck {
             cardCounter++;
             }
         return tempDeck;
+        }
+
+        // Not sure how to set this up as a switch statement, but I figured this was better/more efficient
+    public void setCardNames(){
+        int cardValue;
+        for(int i = 0; i < cards.length; i++){
+            cardValue = cards[i].getCardValue();
+                if(cardValue == 1){
+                    cards[i].setCardName("Ace");
+                }else if(cardValue > 1 && cardValue < 11){
+                    cards[i].setCardName(String.valueOf(cardValue));
+                }else if(cardValue == 11){
+                    cards[i].setCardName("Jack");
+                }else if(cardValue == 12){
+                    cards[i].setCardName("Queen");
+                }else if(cardValue == 13){
+                    cards[i].setCardName("King");
+                }
+            }
         }
 
 
