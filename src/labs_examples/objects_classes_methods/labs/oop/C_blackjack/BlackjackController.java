@@ -18,34 +18,74 @@ public class BlackjackController {
         BlackjackController game = new BlackjackController();
         boolean isOver = false;
         game.playBlackJack();
-        game.playerTurn();
-        game.computerTurn();
         while(!isOver){
-            isOver = !game.checkHands();
             game.playerTurn();
             game.computerTurn();
+            isOver = game.checkHands();
+        }
+        game.winLoseSequence();
+    }
+
+    public void winLoseSequence(){
+        int playerScore = playerHand.returnScoreOfHand();
+        int computerScore = computerHand.returnScoreOfHand();
+        System.out.print("Game results: ");
+        playerHand.printHand(player);
+        System.out.println(player.getName() + "'s score: " + playerHand.returnScoreOfHand());
+        computerHand.printHand(computerAI);
+        System.out.println(computerAI.getName() + "'s score: " + computerHand.returnScoreOfHand());
+        if(playerHand.isOver21() & computerHand.isOver21()){
+            System.out.println("You both lost! House takes the pot.");
+        }else if (playerHand.isOver21()){
+            System.out.println("The computer has won! Computer receives the pot.");
+        }else if (computerHand.isOver21()){
+            System.out.println(player.getName() + " has won! Congratulations! You receive the pot.");
+        }else if(playerScore > computerScore){
+            System.out.println(player.getName() + " has won! Congratulations! You receive the pot.");
+        }else if(playerScore < computerScore){
+            System.out.println("The computer has won! Computer receives the pot.");
+        }else{
+            System.out.println("It's a tie! Money stays in the pot.");
         }
     }
 
     public boolean checkHands(){
         if(playerHand.isOver21() || computerHand.isOver21()){
+            if(playerHand.isOver21()){
+                System.out.println(player.getName() + " is bust!");
+            }
+            if(computerHand.isOver21()){
+                System.out.println(computerAI.getName() + " is bust!");
+            }
             return true;
-        }else{
+        }else if(endTurn && compEndTurn){
+            return true;
+        }
+        else{
             return false;
         }
     }
 
     public void playerTurn(){
         while(!endTurn) {
+            playerHand.printHand(player);
+            System.out.println(player.getName() + "'s score: " + playerHand.returnScoreOfHand());
             System.out.println(player.getName() + ", would you like to take another card?");
             System.out.println("Type \"y\" for yes or \"n\" for no and press \"Enter\": ");
             char userAnswer = input.next().charAt(0);
             if (userAnswer == 'y') {
                 myDeck.dealCardTo(player);
+                System.out.println(player.getName() + "'s score: " + playerHand.returnScoreOfHand());
+                playerHand.setHandValue(playerHand.returnScoreOfHand());
+                if(playerHand.returnScoreOfHand() > 21){
+                    System.out.println("Bust!");
+                }
                 return;
             } else if (userAnswer == 'n') {
                 System.out.println("You have chosen to stick.");
                 endTurn = true;
+                System.out.println(player.getName() + "'s score: " + playerHand.returnScoreOfHand());
+                playerHand.setHandValue(playerHand.returnScoreOfHand());
                 return;
             } else {
                 System.out.println("Invalid input, please only type y or n.");
@@ -56,16 +96,22 @@ public class BlackjackController {
 
     public void computerTurn() {
         while (!compEndTurn) {
+            computerHand.printHand(computerAI);
+            System.out.println(computerAI.getName() + "'s score: " + computerHand.returnScoreOfHand());
             System.out.println(computerAI.getName() + ", would you like to take another card?");
             if (computerAI.computerAIWantsCard()) {
                 System.out.println("Computer has chosen to take another card.");
                 myDeck.dealCardTo(computerAI);
-                return;
             } else {
                 System.out.println("Computer has chosen to stick.");
                 compEndTurn = true;
-                return;
             }
+            System.out.println(computerAI.getName() + "'s score: " + computerHand.returnScoreOfHand());
+            computerHand.setHandValue(computerHand.returnScoreOfHand());
+            if(computerHand.returnScoreOfHand() > 21){
+                System.out.println("Bust!");
+            }
+            return;
         }
     }
 
@@ -89,17 +135,11 @@ public class BlackjackController {
         myDeck.dealCardTo(computerAI);
         myDeck.dealCardTo(computerAI);
 
-        playerHand.printHand(player);
-        computerHand.printHand(computerAI);
+        playerHand.setHandValue(playerHand.returnScoreOfHand());
+        computerHand.setHandValue(computerHand.returnScoreOfHand());
+
         System.out.println(player.getName() + "'s score: " + playerHand.returnScoreOfHand());
         System.out.println(computerAI.getName() + "'s score: " + computerHand.returnScoreOfHand());
-
-
-
-      /*  do{
-
-            }
-        }while((!(playerHand.isOver21())) | (!(computerHand.isOver21())) ); */
 
     }
 
