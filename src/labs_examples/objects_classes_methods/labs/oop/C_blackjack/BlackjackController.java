@@ -1,5 +1,4 @@
 package labs_examples.objects_classes_methods.labs.oop.C_blackjack;
-import com.sun.tools.classfile.ConstantPool;
 
 import java.util.Scanner;
 
@@ -13,17 +12,65 @@ public class BlackjackController {
     Hand computerHand = new Hand();
     private boolean endTurn = false;
     private boolean compEndTurn = false;
+    // The pot will hold the "house's" values in the event of a tie and be added to winnings.
+    Pot pot = new Pot(0);
+
 
     public static void main(String[] args) {
         BlackjackController game = new BlackjackController();
+
+
         boolean isOver = false;
-        game.playBlackJack();
-        while(!isOver){
-            game.playerTurn();
-            game.computerTurn();
-            isOver = game.checkHands();
+        game.takeUserName();
+        // begin loop here
+        while(game.haveMoney()){
+            game.printPlayerMoneyAndBet();
+            game.playBlackJack();
+            while(!isOver){
+                game.playerTurn();
+                game.computerTurn();
+                isOver = game.checkHands();
+                System.out.println("_____________________________________________________________________");
+                System.out.println();
+                System.out.println("_____________________________________________________________________");
+            }
+            isOver = false;
+            game.winLoseSequence();
+            System.out.println("_____________________________________________________________________");
+            System.out.println();
+            System.out.println("_____________________________________________________________________");
         }
-        game.winLoseSequence();
+        // end loop here
+        // have system output the results of the betting and deal with a win/loss situation for that here too
+        game.finalWinLose();
+    }
+
+    public void printPlayerMoneyAndBet(){
+        System.out.println(player.getName() + " has $" + player.getPlayerMoney() + " to bet.");
+        System.out.println(computerAI.getName() + " has $" + computerAI.getPlayerMoney() + " to bet.");
+        System.out.println("Pot value: $" + pot.getPotValue());
+        player.playerBets();
+        computerAI.computerBets(player.getPlayerBet());
+        pot.addBetsToPot(computerAI.getPlayerBet(), player.getPlayerBet());
+        System.out.println("New Pot value: $" + pot.getPotValue());
+    }
+
+    public boolean haveMoney(){
+        if(player.getPlayerMoney() <= 0 | computerAI.getPlayerMoney() <= 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public void finalWinLose(){
+        if(player.getPlayerMoney() > computerAI.getPlayerMoney()){
+            System.out.println("Computer is out of money.");
+            System.out.println("Congratulations! " + player.getName() + ", you have won!");
+        }else{
+            System.out.println(player.getName() + " is out of money. :(");
+            System.out.println("Sorry! " + player.getName() + ", you have lost! Computer wins.");
+        }
     }
 
     public void winLoseSequence(){
@@ -35,18 +82,29 @@ public class BlackjackController {
         computerHand.printHand(computerAI);
         System.out.println(computerAI.getName() + "'s score: " + computerHand.returnScoreOfHand());
         if(playerHand.isOver21() & computerHand.isOver21()){
-            System.out.println("You both lost! House takes the pot.");
+            System.out.println("You both lost! Money stays in the pot.");
         }else if (playerHand.isOver21()){
             System.out.println("The computer has won! Computer receives the pot.");
+            computerAI.setPlayerMoney(computerAI.getPlayerMoney()+pot.getPotValue());
+            pot.setPotValue(0);
         }else if (computerHand.isOver21()){
             System.out.println(player.getName() + " has won! Congratulations! You receive the pot.");
+            player.setPlayerMoney(player.getPlayerMoney()+pot.getPotValue());
+            pot.setPotValue(0);
         }else if(playerScore > computerScore){
             System.out.println(player.getName() + " has won! Congratulations! You receive the pot.");
+            player.setPlayerMoney(player.getPlayerMoney()+pot.getPotValue());
+            pot.setPotValue(0);
         }else if(playerScore < computerScore){
             System.out.println("The computer has won! Computer receives the pot.");
+            computerAI.setPlayerMoney(computerAI.getPlayerMoney()+pot.getPotValue());
+            pot.setPotValue(0);
         }else{
             System.out.println("It's a tie! Money stays in the pot.");
         }
+        System.out.println("_____________________________________________________________________");
+        System.out.println();
+        System.out.println("_____________________________________________________________________");
     }
 
     public boolean checkHands(){
@@ -107,8 +165,10 @@ public class BlackjackController {
             if((computerHand.returnScoreOfHand() > playerHand.returnScoreOfHand()) && endTurn){
                 System.out.println("Computer has chosen to stick.");
                 compEndTurn = true;
-            }
-            else if (computerAI.computerAIWantsCard()){
+            }else if(computerHand.returnScoreOfHand() < playerHand.returnScoreOfHand()){
+                System.out.println("Computer has chosen to take another card.");
+                myDeck.dealCardTo(computerAI);
+            }else if (computerAI.computerAIWantsCard()){
                 System.out.println("Computer has chosen to take another card.");
                 myDeck.dealCardTo(computerAI);
             } else {
@@ -123,17 +183,25 @@ public class BlackjackController {
             return;
         }
     }
-
-    public void playBlackJack(){
-
+    public void takeUserName(){
         System.out.print("Please type your name and press \"Enter\": ");
         player.setName(input.next());
         System.out.println();
         computerAI.setName("Computer Player");
-
+        player.setPlayerMoney(100);
+        computerAI.setPlayerMoney(100);
+    }
+    public void playBlackJack(){
 
         myDeck.setCards(myDeck.createStandardDeck());
         myDeck.setCardNames();
+        playerHand.discardCards();
+        computerHand.discardCards();
+        playerHand.setHandValue(0);
+        computerHand.setHandValue(0);
+        myDeck.emptyUsedCards();
+        endTurn = false;
+        compEndTurn = false;
 
 
         player.setHand(playerHand);

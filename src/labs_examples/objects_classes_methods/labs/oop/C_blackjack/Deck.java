@@ -9,6 +9,10 @@ public class Deck {
      Random random = new Random();
 
 
+     public void emptyUsedCards(){
+         this.usedCards.removeAll(usedCards);
+     }
+
     public void dealCardTo(Player player){
         int randNum = random.nextInt(52);
         if(this.usedCards.contains(randNum)){

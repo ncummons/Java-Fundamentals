@@ -23,6 +23,10 @@ public class Hand {
         return score;
     }
 
+    public void discardCards(){
+        this.cards.removeAll(cards);
+    }
+
     // if the player is over 21 hand value, this will return true and the player is bust
     public boolean isOver21(){
         if(this.handValue > 21){
