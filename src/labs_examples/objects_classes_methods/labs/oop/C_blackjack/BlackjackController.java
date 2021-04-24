@@ -70,6 +70,11 @@ public class BlackjackController {
         while(!endTurn) {
             playerHand.printHand(player);
             System.out.println(player.getName() + "'s score: " + playerHand.returnScoreOfHand());
+            if((playerHand.returnScoreOfHand() > computerHand.returnScoreOfHand()) && compEndTurn) {
+                System.out.println("You have automatically chosen to stick.");
+                endTurn = true;
+                return;
+            }
             System.out.println(player.getName() + ", would you like to take another card?");
             System.out.println("Type \"y\" for yes or \"n\" for no and press \"Enter\": ");
             char userAnswer = input.next().charAt(0);
@@ -99,7 +104,11 @@ public class BlackjackController {
             computerHand.printHand(computerAI);
             System.out.println(computerAI.getName() + "'s score: " + computerHand.returnScoreOfHand());
             System.out.println(computerAI.getName() + ", would you like to take another card?");
-            if (computerAI.computerAIWantsCard()) {
+            if((computerHand.returnScoreOfHand() > playerHand.returnScoreOfHand()) && endTurn){
+                System.out.println("Computer has chosen to stick.");
+                compEndTurn = true;
+            }
+            else if (computerAI.computerAIWantsCard()){
                 System.out.println("Computer has chosen to take another card.");
                 myDeck.dealCardTo(computerAI);
             } else {
