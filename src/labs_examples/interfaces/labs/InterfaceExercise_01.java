@@ -21,3 +21,50 @@ package labs_examples.interfaces.labs;
  */
 
 
+class GameController {
+    public static void main(String[] args) {
+        FootSoldier mySoldier = new FootSoldier();
+        Archer myArcher = new Archer();
+
+        myArcher.attack();
+        myArcher.dealDamage();
+        myArcher.dropLoot();
+
+        mySoldier.attack();
+        mySoldier.dealDamage();
+        mySoldier.dropLoot();
+
+    }
+}
+
+interface EnemyPlayer {
+
+    public void attack();
+    public void dealDamage();
+    public void dropLoot();
+
+}
+
+class Archer implements EnemyPlayer{
+    public void attack(){
+        System.out.println("The archer shoots his bow at you!");
+    }
+    public void dealDamage(){
+        System.out.println("The archer has hit you with an arrow, causing 10 damage.");
+    }
+    public void dropLoot(){
+        System.out.println("The archer has dropped a yew bow and 10 coins.");
+    }
+}
+
+class FootSoldier implements EnemyPlayer{
+    public void attack(){
+        System.out.println("The foot soldier swings his sword at you!");
+    }
+    public void dealDamage(){
+        System.out.println("The foot soldier has hit you with his sword, causing 15 damage.");
+    }
+    public void dropLoot(){
+        System.out.println("The foot soldier has dropped a steel sword and 5 coins.");
+    }
+}
