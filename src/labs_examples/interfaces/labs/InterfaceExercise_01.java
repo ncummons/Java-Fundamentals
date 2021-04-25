@@ -15,6 +15,9 @@ package labs_examples.interfaces.labs;
  *          turnOn() and brake().
  *       - A PersonalDevice interface that is implemented by an iPad class and a Computer class. Two of the methods could be
  *          playMusic() and turnOff().
+ *
+ *          I will use a enemy player interface with the classes: archer and foot soldier
+ *
  */
 
 
