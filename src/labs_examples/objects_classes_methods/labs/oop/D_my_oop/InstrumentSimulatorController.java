@@ -2,6 +2,13 @@ package labs_examples.objects_classes_methods.labs.oop.D_my_oop;
 
 import java.util.Scanner;
 
+/** I imagine that this would be a more fun program if I could assign sounds/visuals to these values,
+ * but the bones seem to work decently well.
+ *
+ * You can choose between two instruments at present: a Korg synth or Jackson electric guitar.
+ * Each has its own unique set of inputs from the keyboard and has different outputs when
+ * "testing" the instrument out upon first choosing it.                                             */
+
 public class InstrumentSimulatorController {
     Pianos yourPiano = new Pianos("Korg", true, 112);
     Guitars myGuitar = new Guitars("Jackson", true, 24);
