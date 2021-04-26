@@ -2,6 +2,7 @@ package labs_examples.objects_classes_methods.labs.oop.C_blackjack;
 import java.util.Scanner;
 
 public class Player {
+    private int numGamesWon = 0;
     private String name;
     private Hand hand;
     private int playerMoney;
@@ -77,5 +78,17 @@ public class Player {
 
     public void setPlayerBet(int playerBet) {
         this.playerBet = playerBet;
+    }
+
+    public void addWin(){
+        this.numGamesWon++;
+    }
+
+    public int getNumGamesWon() {
+        return numGamesWon;
+    }
+
+    public void setNumGamesWon(int numGamesWon) {
+        this.numGamesWon = numGamesWon;
     }
 }

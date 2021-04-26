@@ -7,17 +7,29 @@ public class Hand {
     private int handValue;
 
     // Returns an integer value that represents the score of the player's hand (need to assign to a variable or use)
+    // added feature where ace can be 1 or 11
     public int returnScoreOfHand(){
         int score = 0;
         int cardVal;
         Card currentCard;
-        for(int i = 0; i < cards.size(); i++){
+        for(int i = 0; i < cards.size(); i++) {
             currentCard = cards.get(i);
             cardVal = currentCard.getCardValue();
-            if(cardVal > 10){
-                score+= 10;
-            }else{
+            if (cardVal > 10) {
+                score += 10;
+            } else if(cardVal == 1){
+                score += 11;
+            } else {
                 score += cardVal;
+            }
+        }
+        for(int i = 0; i < cards.size(); i++) {
+            currentCard = cards.get(i);
+            cardVal = currentCard.getCardValue();
+            if ((cardVal == 1 && score - 10 == 21) || (cardVal == 1 && score > 21)) {
+                    score-=10;
+            }else{
+                break;
             }
         }
         return score;

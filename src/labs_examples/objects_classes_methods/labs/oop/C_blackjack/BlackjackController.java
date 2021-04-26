@@ -14,6 +14,7 @@ public class BlackjackController {
     private boolean compEndTurn = false;
     // The pot will hold the "house's" values in the event of a tie and be added to winnings.
     Pot pot = new Pot(0);
+    private static int gamesPlayed = 0;
 
 
     public static void main(String[] args) {
@@ -87,21 +88,29 @@ public class BlackjackController {
             System.out.println("The computer has won! Computer receives the pot.");
             computerAI.setPlayerMoney(computerAI.getPlayerMoney()+pot.getPotValue());
             pot.setPotValue(0);
+            computerAI.addWin();
         }else if (computerHand.isOver21()){
             System.out.println(player.getName() + " has won! Congratulations! You receive the pot.");
             player.setPlayerMoney(player.getPlayerMoney()+pot.getPotValue());
             pot.setPotValue(0);
+            player.addWin();
         }else if(playerScore > computerScore){
             System.out.println(player.getName() + " has won! Congratulations! You receive the pot.");
             player.setPlayerMoney(player.getPlayerMoney()+pot.getPotValue());
             pot.setPotValue(0);
+            player.addWin();
         }else if(playerScore < computerScore){
             System.out.println("The computer has won! Computer receives the pot.");
             computerAI.setPlayerMoney(computerAI.getPlayerMoney()+pot.getPotValue());
             pot.setPotValue(0);
+            computerAI.addWin();
         }else{
             System.out.println("It's a tie! Money stays in the pot.");
         }
+        System.out.println("Computer has won: " + computerAI.getNumGamesWon() + " games.");
+        System.out.println(player.getName() + " has won: " + player.getNumGamesWon() + " games.");
+        gamesPlayed++;
+        System.out.println("Total number of games played: " + gamesPlayed);
         System.out.println("_____________________________________________________________________");
         System.out.println();
         System.out.println("_____________________________________________________________________");
@@ -165,7 +174,7 @@ public class BlackjackController {
             if((computerHand.returnScoreOfHand() > playerHand.returnScoreOfHand()) && endTurn){
                 System.out.println("Computer has chosen to stick.");
                 compEndTurn = true;
-            }else if(computerHand.returnScoreOfHand() < playerHand.returnScoreOfHand()){
+            }else if((computerHand.returnScoreOfHand() < playerHand.returnScoreOfHand()) && (playerHand.returnScoreOfHand() <= 21)){
                 System.out.println("Computer has chosen to take another card.");
                 myDeck.dealCardTo(computerAI);
             }else if (computerAI.computerAIWantsCard()){
