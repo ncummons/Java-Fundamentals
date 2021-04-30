@@ -13,7 +13,7 @@ class SumArray2 {
                     Thread.currentThread().getName() +
                     " is " + sum);
             try {
-                Thread.sleep(10); // allow task-switch
+                Thread.sleep(1000); // allow task-switch
             }
             catch(InterruptedException exc) {
                 System.out.println("Thread interrupted.");
