@@ -9,10 +9,118 @@ package labs_examples.multi_threading.labs;
  *      task such as summing an array, concatenating inputs, etc.
  *
  *      NEED TO FIX NOTIFY() --> I cannot get it to work for me.
+ *      Look at the Coding Nomads example for ticked/tocked to understand wait and notify in ex. 10
+ *      Edit: Fixed problem. Finally got it to do what I wanted.
  *
  */
 
-class ControlsThreads{
+class ControllerClass5{
+    public static void main(String[] args) {
+        ArrayToSum myArr = new ArrayToSum();
+        myArr.populateArray();
+        myArr.printArray();
+        ArrayManipulator arrayManipulator = new ArrayManipulator(myArr);
+        Thread summer = new Thread(new Summer(arrayManipulator));
+        Thread printer = new Thread(new PrintsSum(arrayManipulator));
+
+        summer.start();
+        printer.start();
+    }
+}
+
+class Summer implements Runnable{
+
+    ArrayManipulator summer;
+
+    public Summer(ArrayManipulator summer) {
+        this.summer = summer;
+    }
+
+    @Override
+    public void run() {
+        summer.sumArr();
+    }
+}
+
+class PrintsSum implements Runnable{
+
+    ArrayManipulator printsSum;
+
+    public PrintsSum(ArrayManipulator printsSum) {
+        this.printsSum = printsSum;
+    }
+
+    @Override
+    public void run() {
+        printsSum.printSum();
+    }
+}
+
+
+class ArrayToSum {
+
+    Integer[] intArr = new Integer[10];
+    boolean isSummed = false;
+    int sumToPrint;
+
+    public void populateArray() {
+        for (int i = 0; i < intArr.length; i++) {
+            intArr[i] = i + 1;
+        }
+    }
+
+    public void printArray() {
+        System.out.print("| ");
+        for (int x : intArr) {
+            System.out.print(x + " | ");
+        }
+        System.out.println();
+    }
+}
+
+class ArrayManipulator {
+
+    ArrayToSum arrayToSum;
+
+    public ArrayManipulator(ArrayToSum arr) {
+        arrayToSum = arr;
+    }
+
+    public synchronized void sumArr() {
+        int sum = 0;
+        while (arrayToSum.isSummed){
+            try {
+                wait();
+            } catch (InterruptedException e)  {
+                Thread.currentThread().interrupt();
+                System.out.println("Thread interrupted" + e);
+            }
+        }
+        for (int x : arrayToSum.intArr) {
+            sum += x;
+            System.out.println("The current sum is: " + sum);
+        }
+        arrayToSum.sumToPrint = sum;
+        arrayToSum.isSummed = true;
+        notifyAll();
+    }
+
+    public synchronized void printSum() {
+        while(!arrayToSum.isSummed){
+            try {
+                wait();
+            } catch (InterruptedException e)  {
+                Thread.currentThread().interrupt();
+                System.out.println("Thread interrupted" + e);
+            }
+        }
+        System.out.println("The final sum is: " + arrayToSum.sumToPrint);
+    }
+}
+
+
+// Failed first attempt below -- I think I messed up on the scope of the array object perhaps in addition to some other things.
+/* class ControlsThreads{
 
     public static void main(String[] args) {
         ArrayToSum myArray = new ArrayToSum();
@@ -24,6 +132,14 @@ class ControlsThreads{
 
         Summer summer = new Summer("Sum Thread", myArray);
         Printer printer = new Printer("Printer Thread", myArray);
+
+        try {
+            summer.thread.join();
+            printer.thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -68,15 +184,14 @@ class Summer implements Runnable{
     public void run() {
         int sum = 0;
         synchronized (arrayToSum) {
-            if(!arrayToSum.initialized){
-                System.out.println(thread.getName() + " is waiting.");
+            while(!arrayToSum.initialized){
                 try {
                     wait();
                 }catch (InterruptedException e){
                     e.printStackTrace();
                 }
             }
-            while (!arrayToSum.isSummed) {
+            if (arrayToSum.initialized) {
                 for (int x : arrayToSum.intArr) {
                     try {
                         thread.sleep(100);
@@ -90,11 +205,15 @@ class Summer implements Runnable{
                 arrayToSum.isSummed = true;
                 }
             }
-        try{
-            notify();
-        }catch (IllegalMonitorStateException e){
-            e.printStackTrace();
-        }
+            if (arrayToSum.isSummed){
+                try{
+                    notify();
+                }catch (IllegalMonitorStateException e){
+                    e.printStackTrace();
+                }
+                return;
+            }
+
     }
 }
 
@@ -112,16 +231,12 @@ class Printer implements Runnable{
     @Override
     public void run() {
         synchronized (arrayToSum){
-            if (!arrayToSum.initialized){
+            while (!arrayToSum.initialized){
                 System.out.println("Initializing thread " + thread.getName());
                 arrayToSum.initialized = true;
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                notify();
             }
-            while (!arrayToSum.isSummed){
+            if (!arrayToSum.isSummed){
                 try {
                     System.out.println("Not yet summed.");
                     wait();
@@ -135,4 +250,4 @@ class Printer implements Runnable{
             }
         }
     }
-}
+} */
