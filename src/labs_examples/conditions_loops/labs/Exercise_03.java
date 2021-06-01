@@ -1,7 +1,5 @@
 package labs_examples.conditions_loops.labs;
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
-
 import java.util.Scanner;
 
 /**

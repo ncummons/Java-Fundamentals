@@ -1,10 +1,4 @@
 package labs_examples.exception_handling.labs;
-import org.omg.CORBA.INITIALIZE;
-
-import java.sql.Array;
-import java.sql.SQLOutput;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 /**
  * Exception Handling Exercise 2:

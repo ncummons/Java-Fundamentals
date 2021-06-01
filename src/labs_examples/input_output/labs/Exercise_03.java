@@ -1,7 +1,5 @@
 package labs_examples.input_output.labs;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
-
 import java.io.*;
 
 /**
