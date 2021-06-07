@@ -1,5 +1,9 @@
 package labs_examples.lambdas.labs;
 
+import java.util.ArrayList;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
 /**
  * Lambdas Exercise 1:
  *
@@ -36,7 +40,15 @@ interface BlahExampleFunc{
 
 @FunctionalInterface
 interface LessBlahExampleFunc<T>{
-    T lessBlahFunMethod(T t);
+    T lessBlahFuncMethod(T t);
+}
+
+// 5) Demonstrate creating a functional interface with an abstract method that takes 2 parameters and returns a
+//    value
+
+@FunctionalInterface
+interface WayLessBlahExampleFunc<T, U, V>{
+    V wayLessBlahFuncMethod(T t, U u);
 }
 
  // 2) Implement the previous functional interface with a lambda expression and use it. Also demonstrate creating
@@ -58,7 +70,53 @@ class BlahFuncController{
  //       4) Implement the previous functional interface with a lambda expression and use it. Also demonstrate creating
  //          an anonymous inner class from this interface.
         LessBlahExampleFunc<Double> squareRoot = x -> Math.sqrt(x);
-        System.out.println(squareRoot.lessBlahFunMethod(16.0));
+        System.out.println(squareRoot.lessBlahFuncMethod(16.0));
+
+        // Anonymous inner class example
+
+        LessBlahExampleFunc<Integer> squareInt = new LessBlahExampleFunc<Integer>() {
+            @Override
+            public Integer lessBlahFuncMethod(Integer integer) {
+                return integer*integer;
+            }
+        };
+        System.out.println(squareInt.lessBlahFuncMethod(5));
+
+        // 6) Implement the previous functional interface with a lambda expression and use it. Also demonstrate creating
+        //    an anonymous inner class from this interface.
+
+        WayLessBlahExampleFunc<String, Integer, Character> findCharAt = (word, x) -> word.charAt(x);
+        System.out.println(findCharAt.wayLessBlahFuncMethod("I am incredibly happy today!", 8));
+
+        // Anonymous inner class example
+
+        WayLessBlahExampleFunc<Integer, Integer, Double> divisionIntsToDoub = new WayLessBlahExampleFunc<Integer, Integer, Double>() {
+            @Override
+            public Double wayLessBlahFuncMethod(Integer integer, Integer integer2) {
+                return (double)integer/(double)integer2;
+            }
+        };
+        System.out.println(divisionIntsToDoub.wayLessBlahFuncMethod(15,2));
+
+        // 7) Demonstrate the use of at least two built-in functional interfaces from the java.util.function package.
+
+        Predicate<Integer> isLessThanFifty = x -> x < 50;
+        System.out.println(isLessThanFifty.test(49));
+        System.out.println(isLessThanFifty.test(51));
+
+        BiFunction<Integer, ArrayList<String>, String> getStringAtIndex = (x, arrList) -> arrList.get(x);
+
+        ArrayList<String> myList = new ArrayList<>();
+        myList.add("Happy");
+        myList.add("Sad");
+        myList.add("Angry");
+        myList.add("Joyous");
+        myList.add("Ecstatic");
+        myList.add("Bored");
+
+        System.out.println(getStringAtIndex.apply(4, myList));
+
+
 
 
     }
