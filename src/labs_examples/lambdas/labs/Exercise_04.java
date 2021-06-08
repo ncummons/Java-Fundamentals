@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -105,16 +106,41 @@ class MainClass04{
 
         try {
             Stream<String> csvFile = Files.lines(Paths.get(filePath));
-            csvFile.map(x -> x.split(",")).forEach(x -> System.out.println(x[0] + " " + x[1] + " " + x[2]));
+            // csvFile.map(x -> x.split(",")).forEach(x -> System.out.println(x[0] + " " + x[1] + " " + x[2]));
             // Try to actually sum the elements here
+            double total = csvFile.map(x -> x.split(","))
+                    .map(x -> Double.parseDouble(x[2]))
+                    .reduce(0.0, (Double a, Double b) -> a + b);
+            System.out.println("The sum is: " + total);
             csvFile.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         // 9) Demonstrate the anyMatch() function.
+
+        ArrayList<String> stringArrayList = new ArrayList<>();
+        stringArrayList.add("Programming");
+        stringArrayList.add("is");
+        stringArrayList.add("super");
+        stringArrayList.add("duper");
+        stringArrayList.add("fun!");
+
+        boolean doesContain = stringArrayList.stream().anyMatch( s -> s.equalsIgnoreCase("programming"));
+        System.out.println(doesContain);
+
         // 10) Demonstrate the allMatch() function.
+
+        boolean allMatches = stringArrayList.stream().allMatch( s -> s.length() > 3);
+        System.out.println(allMatches);
+
         // 11) Demonstrate the collect() terminal operation to store resulting values into a List
+
+        List<Double> newDoubleList = new ArrayList<>();
+        newDoubleList = Stream.of(0.1, 2.25, 5.9, 11.2, 1.1).map( d -> d+1.1).collect(Collectors.toList());
+        newDoubleList.stream().forEach(x -> System.out.print(x + " | "));
+        System.out.println();
+
     }
 }
 
