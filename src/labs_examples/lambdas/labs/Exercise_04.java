@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -100,7 +101,17 @@ class MainClass04{
         }
 
         // 8) Demonstrate how to Stream the stream_text_lab.csv file in this package. Split the lines into String arrays,
-        //    the print out the sum of all elements at index 2.
+        //    then print out the sum of all elements at index 2.
+
+        try {
+            Stream<String> csvFile = Files.lines(Paths.get(filePath));
+            csvFile.map(x -> x.split(",")).forEach(x -> System.out.println(x[0] + " " + x[1] + " " + x[2]));
+            // Try to actually sum the elements here
+            csvFile.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // 9) Demonstrate the anyMatch() function.
         // 10) Demonstrate the allMatch() function.
         // 11) Demonstrate the collect() terminal operation to store resulting values into a List
