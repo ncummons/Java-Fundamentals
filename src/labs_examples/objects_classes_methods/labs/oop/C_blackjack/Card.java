@@ -3,10 +3,10 @@ package labs_examples.objects_classes_methods.labs.oop.C_blackjack;
 import java.util.Arrays;
 
 public class Card {
-    private static char[] suit = new char[] {'♠', '♦', '♥', '♣'};
-    private int cardValue;
-    private char cardSuit;
-    private String cardName;
+    protected static char[] suit = new char[] {'♠', '♦', '♥', '♣'};
+    protected int cardValue;
+    protected char cardSuit;
+    protected String cardName;
 
     public void printCardName(){
         System.out.println(cardName + " of " + cardSuit + "\'s");

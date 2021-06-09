@@ -1,7 +1,7 @@
 package labs_examples.objects_classes_methods.labs.oop.C_blackjack;
 
 public class Pot {
-    private int potValue;
+    protected int potValue;
 
     public void addBetsToPot(int money1, int money2){
         this.potValue += money1 + money2;

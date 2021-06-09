@@ -10,11 +10,11 @@ public class BlackjackController {
     Deck myDeck = new Deck();
     Hand playerHand = new Hand();
     Hand computerHand = new Hand();
-    private boolean endTurn = false;
-    private boolean compEndTurn = false;
+    protected boolean endTurn = false;
+    protected boolean compEndTurn = false;
     // The pot will hold the "house's" values in the event of a tie and be added to winnings.
     Pot pot = new Pot(0);
-    private static int gamesPlayed = 0;
+    protected static int gamesPlayed = 0;
 
 
     public static void main(String[] args) {

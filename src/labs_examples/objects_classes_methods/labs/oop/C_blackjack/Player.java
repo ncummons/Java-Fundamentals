@@ -2,12 +2,12 @@ package labs_examples.objects_classes_methods.labs.oop.C_blackjack;
 import java.util.Scanner;
 
 public class Player {
-    private int numGamesWon = 0;
-    private String name;
-    private Hand hand;
-    private int playerMoney;
-    private int playerBet;
-    private Scanner betInput = new Scanner(System.in);
+    protected int numGamesWon = 0;
+    protected String name;
+    protected Hand hand;
+    protected int playerMoney;
+    protected int playerBet;
+    protected Scanner betInput = new Scanner(System.in);
 
     public void playerBets(){
         System.out.println("How much would you like to bet? You have $" + getPlayerMoney() + ".");

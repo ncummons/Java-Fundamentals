@@ -3,8 +3,8 @@ package labs_examples.objects_classes_methods.labs.oop.C_blackjack;
 import java.util.ArrayList;
 
 public class Hand {
-    private ArrayList<Card> cards = new ArrayList<>();
-    private int handValue;
+    protected ArrayList<Card> cards = new ArrayList<>();
+    protected int handValue;
 
     // Returns an integer value that represents the score of the player's hand (need to assign to a variable or use)
     // added feature where ace can be 1 or 11

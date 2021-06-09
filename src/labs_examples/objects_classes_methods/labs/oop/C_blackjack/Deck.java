@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Deck {
-     private Card[] cards = new Card[52];
-     private ArrayList<Integer> usedCards = new ArrayList<>();
+     protected Card[] cards = new Card[52];
+     protected ArrayList<Integer> usedCards = new ArrayList<>();
      Random random = new Random();
 
 
