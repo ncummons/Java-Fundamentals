@@ -5,15 +5,102 @@
 *   Now that you have your air travel database all set up and populated, please demonstrate how to:
 *
 *       1.) Query all flights on a specific day
+
+            SELECT * FROM flights
+            WHERE flights.flight_date
+            LIKE "2018-12-25";
+
 *       2.) Query all flights between two specific cities on a specific day
+
+            SELECT * FROM flights
+            WHERE flights.flight_date
+            LIKE "2018-12-25"
+            AND flights.destination_airport_id = 5
+            AND flights.origin_airport_id = 2;
+
 *       3.) Query all passengers on a specific flight between two specific cities today
+
+            SELECT passengers.first_name, passengers.last_name, flights.flight_num
+            FROM passengers
+                JOIN tickets
+                ON passengers.passenger_num = tickets.passenger_num
+                JOIN tickets_flights
+                ON tickets.ticket_num = tickets_flights.ticket_num
+                JOIN flights
+                ON tickets_flights.flight_num = flights.flight_num
+            WHERE flights.flight_date
+            LIKE "2018-12-25"
+            AND flights.destination_airport_id = 5
+            AND flights.origin_airport_id = 2;
+
 *       4.) Query the flight information for a specific passenger on a specific flight
+
+            SELECT passengers.first_name, passengers.last_name, flights.*
+            FROM passengers
+                JOIN tickets
+                ON passengers.passenger_num = tickets.passenger_num
+                JOIN tickets_flights
+                ON tickets.ticket_num = tickets_flights.ticket_num
+                JOIN flights
+                ON tickets_flights.flight_num = flights.flight_num
+            WHERE flights.flight_num = 1
+            AND passengers.passenger_num = 1;
+
 *       5.) Query the passenger information for a specific user on a specific flight yesterday
+
+            SELECT passengers.*
+            FROM passengers
+                JOIN tickets
+                ON passengers.passenger_num = tickets.passenger_num
+                JOIN tickets_flights
+                ON tickets.ticket_num = tickets_flights.ticket_num
+                JOIN flights
+                ON tickets_flights.flight_num = flights.flight_num
+            WHERE flights.flight_num = 3
+            AND passengers.passenger_num = 5
+            AND flights.flight_date LIKE "2021-07-08";
+
 *       6.) Query the number of flights between two specific cities this week, month, and year
+
+            SELECT COUNT(flight_num)
+            FROM flights
+            WHERE (flights.origin_airport_id = 5 AND flights.destination_airport_id = 1)
+            OR (flights.origin_airport_id = 1 AND flights.destination_airport_id = 5)
+            AND (flights.flight_date BETWEEN '2021-07-09' AND '2021-07-16');
+
 *       7.) Query the number of passengers that travelled between two specific cities today, this week, month and year
+
+            SELECT COUNT(passengers.passenger_num)
+            FROM passengers
+            	JOIN tickets
+            	ON passengers.passenger_num = tickets.passenger_num
+            	JOIN tickets_flights
+            	ON tickets.ticket_num = tickets_flights.ticket_num
+            	JOIN flights
+            	ON tickets_flights.flight_num = flights.flight_num
+            WHERE (flights.origin_airport_id = 5 AND flights.destination_airport_id = 1)
+            OR (flights.origin_airport_id = 1 AND flights.destination_airport_id = 5)
+            AND (flights.flight_date BETWEEN '2021-07-09' AND '2021-07-16');
+
 *       8.) Insert records for new flights between airports
+
+            INSERT INTO flights (flight_date, flight_time, pilot_num, airline_num, plane_num, destination_airport_id, origin_airport_id)
+            VALUES ('2021-07-15', '12:00:00', 1, 2, 5, 3, 4);
+
 *       9.) Insert records for new tickets and passengers on specific flights
+
+            INSERT INTO tickets (ticket_num, passenger_num)
+            VALUES (9, 9);
+
+            INSERT INTO passengers (class, first_name, last_name, age, group_num, ticket_num)
+            VALUES ("First", "Melody", "Homan", 27, 7, 9);
+
 *       10.) Update meal preference (or something similar) for a specific passenger on a specific flight
+
+            UPDATE passengers
+            SET class = "First"
+            WHERE passenger_num = 1;
+
 *       Bonus: Have some fun - get creative - what else can you do? Flex those SQL muscles and show us what
 *           you've got! :)
 *
