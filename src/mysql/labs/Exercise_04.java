@@ -37,6 +37,28 @@ public class Exercise_04 {
         ...
          */
 
+        int rowsAffected;
+        Flight myFlight;
+        Passenger myPassenger;
+
+        rowsAffected = Flight.createFlight(7,"2021-07-15", "16:45:00", 3, 2, 5, 2, 1);
+        System.out.println(rowsAffected);
+        rowsAffected = Flight.updateFlightDateTime(7, "2021-07-16", "18:45:00");
+        System.out.println(rowsAffected);
+        myFlight = Flight.queryFlight(7);
+        System.out.println(myFlight.toString());
+        rowsAffected = Flight.deleteFlight(7);
+        System.out.println(rowsAffected);
+
+        rowsAffected = Passenger.createPassenger(10, "Economy", "Jude", "Laww", 42, 6, 5);
+        System.out.println(rowsAffected);
+        rowsAffected = Passenger.updatePassengerGroupTicket(10, "Jeremy", "Lewis");
+        System.out.println(rowsAffected);
+        myPassenger = Passenger.queryPassenger(10);
+        System.out.println(myPassenger.toString());
+        rowsAffected = Passenger.deletePassenger(10);
+        System.out.println(rowsAffected);
+
 
     }
 }
@@ -63,14 +85,14 @@ class Flight {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            String connectionString = "jdbc:mysql://localhost/air_travel"
-                    + "user=root&password=SCcds1s#1"
+            String connectionString = "jdbc:mysql://localhost/air_travel?"
+                    + "user=root&password=p@ssw3rd"
                     + "&useSSL=false&allowPublicKeyRetrieval=true";
             connection = DriverManager.getConnection(connectionString);
 
             preparedStatement = connection.prepareStatement("insert into flights (flight_num, flight_date, " +
                     "flight_time, pilot_num, airline_num, plane_num, destination_airport_id, origin_airport_id)" +
-                    " values (?, ?, ?, ?, ?, ?, ?, ?)");
+                    " values (?, ?, ?, ?, ?, ?, ?, ?);");
 
             preparedStatement.setInt(1, flight_num);
             preparedStatement.setString(2, flight_date);
@@ -93,6 +115,7 @@ class Flight {
                 preparedStatement.close();
                 // resultSet.close(); (reference)
                 connection.close();
+                System.out.println("Flight created.");
             } catch (SQLException e){
                 e.printStackTrace();
             }
@@ -110,12 +133,12 @@ class Flight {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            String connectionString = "jdbc:mysql://localhost/air_travel"
-                    + "user=root&password=SCcds1s#1"
+            String connectionString = "jdbc:mysql://localhost/air_travel?"
+                    + "user=root&password=p@ssw3rd"
                     + "&useSSL=false&allowPublicKeyRetrieval=true";
             connection = DriverManager.getConnection(connectionString);
 
-            preparedStatement = connection.prepareStatement("select * from flights where flight_num = ?");
+            preparedStatement = connection.prepareStatement("select * from flights where flight_num = ?;");
 
             preparedStatement.setInt(1, flight_num);
             resultSet = preparedStatement.executeQuery();
@@ -165,13 +188,13 @@ class Flight {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            String connectionString = "jdbc:mysql://localhost/air_travel"
-                    + "user=root&password=SCcds1s#1"
+            String connectionString = "jdbc:mysql://localhost/air_travel?"
+                    + "user=root&password=p@ssw3rd"
                     + "&useSSL=false&allowPublicKeyRetrieval=true";
             connection = DriverManager.getConnection(connectionString);
 
             preparedStatement = connection.prepareStatement("update flights set flight_date = ?, " +
-                                                                 "flight_time = ? where flight_num = ?");
+                                                                 "flight_time = ? where flight_num = ?;");
 
             preparedStatement.setString(1, flight_date);
             preparedStatement.setString(2, flight_time);
@@ -190,6 +213,7 @@ class Flight {
                 preparedStatement.close();
                 // resultSet.close(); (reference)
                 connection.close();
+                System.out.println("Flight updated.");
             } catch (SQLException e){
                 e.printStackTrace();
             }
@@ -207,12 +231,12 @@ class Flight {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            String connectionString = "jdbc:mysql://localhost/air_travel"
-                    + "user=root&password=SCcds1s#1"
+            String connectionString = "jdbc:mysql://localhost/air_travel?"
+                    + "user=root&password=p@ssw3rd"
                     + "&useSSL=false&allowPublicKeyRetrieval=true";
             connection = DriverManager.getConnection(connectionString);
 
-            preparedStatement = connection.prepareStatement("delete from flights where flight_num = ?");
+            preparedStatement = connection.prepareStatement("delete from flights where flight_num = ?;");
 
             preparedStatement.setInt(1, flight_num);
 
@@ -229,6 +253,7 @@ class Flight {
                 preparedStatement.close();
                 // resultSet.close(); (reference)
                 connection.close();
+                System.out.println("Flight deleted.");
             } catch (SQLException e){
                 e.printStackTrace();
             }
@@ -241,10 +266,10 @@ class Flight {
         return "Flight{" +
                 "flight_num=" + flight_num +
                 ", flight_date='" + flight_date + '\'' +
-                ", flight_time='" + flight_time + '\'' +
+                ", flight_time='" + flight_time + '\'' + "\n" +
                 ", pilot_num=" + pilot_num +
                 ", airline_num=" + airline_num +
-                ", plane_num=" + plane_num +
+                ", plane_num=" + plane_num + "\n" +
                 ", destination_airport_id=" + destination_airport_id +
                 ", origin_airport_id=" + origin_airport_id +
                 '}';
@@ -266,19 +291,19 @@ class Passenger {
                                       int group_num, int ticket_num){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        // ResultSet resultSet = null; (kept here for reference)
+        // ResultSet resultSet = null;
         int x = 0;
 
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            String connectionString = "jdbc:mysql://localhost/air_travel"
-                    + "user=root&password=SCcds1s#1"
+            String connectionString = "jdbc:mysql://localhost/air_travel?"
+                    + "user=root&password=p@ssw3rd"
                     + "&useSSL=false&allowPublicKeyRetrieval=true";
             connection = DriverManager.getConnection(connectionString);
 
             preparedStatement = connection.prepareStatement("insert into passengers (passenger_num, class," +
-                    "first_name, last_name, age, group_num, ticket_num) values (?, ?, ?, ?, ?, ?, ?)");
+                    "first_name, last_name, age, group_num, ticket_num) values (?, ?, ?, ?, ?, ?, ?);");
 
             preparedStatement.setInt(1, passenger_num);
             preparedStatement.setString(2, passenger_class);
@@ -302,13 +327,160 @@ class Passenger {
                 preparedStatement.close();
                 // resultSet.close(); (reference)
                 connection.close();
+                System.out.println("Passenger created.");
             } catch (SQLException e){
                 e.printStackTrace();
             }
         }
         return x;
     }
-    //queryPassenger(...)
-    //updatePassenger(...)
-    //deletePassenger(...)
+
+    public static Passenger queryPassenger(int passenger_num){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Passenger passenger = new Passenger();
+
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            String connectionString = "jdbc:mysql://localhost/air_travel?"
+                    + "user=root&password=p@ssw3rd"
+                    + "&useSSL=false&allowPublicKeyRetrieval=true";
+            connection = DriverManager.getConnection(connectionString);
+
+            preparedStatement = connection.prepareStatement("select * from passengers where passenger_num = ?;");
+
+            preparedStatement.setInt(1, passenger_num);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                System.out.println("passenger number: " + resultSet.getInt("passenger_num"));
+                passenger.passenger_num = resultSet.getInt("passenger_num");
+                System.out.println("passenger class: " + resultSet.getString("class"));
+                passenger.passenger_class = resultSet.getString("class");
+                System.out.println("first name: " + resultSet.getString("first_name"));
+                passenger.first_name = resultSet.getString("first_name");
+                System.out.println("last name: " + resultSet.getString("last_name"));
+                passenger.last_name = resultSet.getString("last_name");
+                System.out.println("passenger age: " + resultSet.getInt("age"));
+                passenger.age = resultSet.getInt("age");
+                System.out.println("group number: " + resultSet.getInt("group_num"));
+                passenger.group_num = resultSet.getInt("group_num");
+                System.out.println("ticket number: " + resultSet.getInt("ticket_num"));
+                passenger.ticket_num = resultSet.getInt("ticket_num");
+            }
+
+        } catch (SQLException exc) {
+            System.out.println("Exception occurred");
+            exc.printStackTrace();
+        } catch (ClassNotFoundException e){
+            System.out.println("Exception occurred - driver not found on classpath");
+            e.printStackTrace();
+        } finally {
+            try {
+                preparedStatement.close();
+                resultSet.close();
+                connection.close();
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return passenger;
+    }
+
+    public static int updatePassengerGroupTicket(int passenger_num, String first_name, String last_name){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        // ResultSet resultSet = null;
+        int x = 0;
+
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            String connectionString = "jdbc:mysql://localhost/air_travel?"
+                    + "user=root&password=p@ssw3rd"
+                    + "&useSSL=false&allowPublicKeyRetrieval=true";
+            connection = DriverManager.getConnection(connectionString);
+
+            preparedStatement = connection.prepareStatement("update passengers set first_name = ?, last_name = ?" +
+                                                            " where passenger_num = ?;");
+
+            preparedStatement.setInt(3, passenger_num);
+            preparedStatement.setString(1, first_name);
+            preparedStatement.setString(2, last_name);
+
+
+            x = preparedStatement.executeUpdate();
+
+        } catch (SQLException exc) {
+            System.out.println("Exception occurred");
+            exc.printStackTrace();
+        } catch (ClassNotFoundException e){
+            System.out.println("Exception occurred - driver not found on classpath");
+            e.printStackTrace();
+        } finally {
+            try {
+                preparedStatement.close();
+                // resultSet.close(); (reference)
+                connection.close();
+                System.out.println("Passenger updated.");
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return x;
+    }
+
+    public static int deletePassenger(int passenger_num){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        // ResultSet resultSet = null; (kept here for reference)
+        int x = 0;
+
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            String connectionString = "jdbc:mysql://localhost/air_travel?"
+                    + "user=root&password=p@ssw3rd"
+                    + "&useSSL=false&allowPublicKeyRetrieval=true";
+            connection = DriverManager.getConnection(connectionString);
+
+            preparedStatement = connection.prepareStatement("delete from passengers where passenger_num = ?;");
+
+            preparedStatement.setInt(1, passenger_num);
+
+            x = preparedStatement.executeUpdate();
+
+        } catch (SQLException exc) {
+            System.out.println("Exception occurred");
+            exc.printStackTrace();
+        } catch (ClassNotFoundException e){
+            System.out.println("Exception occurred - driver not found on classpath");
+            e.printStackTrace();
+        } finally {
+            try {
+                preparedStatement.close();
+                // resultSet.close(); (reference)
+                connection.close();
+                System.out.println("Passenger deleted.");
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return x;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Passenger{" +
+                "passenger_num=" + passenger_num +
+                ", passenger_class='" + passenger_class + '\'' +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' + "\n" +
+                ", age=" + age +
+                ", group_num=" + group_num +
+                ", ticket_num=" + ticket_num +
+                '}';
+    }
 }
