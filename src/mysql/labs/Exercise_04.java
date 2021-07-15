@@ -261,7 +261,53 @@ class Passenger {
     private int group_num;
     private int ticket_num;
 
-    //createPassenger(...)
+    public static int createPassenger(int passenger_num, String passenger_class,
+                                      String first_name, String last_name, int age,
+                                      int group_num, int ticket_num){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        // ResultSet resultSet = null; (kept here for reference)
+        int x = 0;
+
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            String connectionString = "jdbc:mysql://localhost/air_travel"
+                    + "user=root&password=SCcds1s#1"
+                    + "&useSSL=false&allowPublicKeyRetrieval=true";
+            connection = DriverManager.getConnection(connectionString);
+
+            preparedStatement = connection.prepareStatement("insert into passengers (passenger_num, class," +
+                    "first_name, last_name, age, group_num, ticket_num) values (?, ?, ?, ?, ?, ?, ?)");
+
+            preparedStatement.setInt(1, passenger_num);
+            preparedStatement.setString(2, passenger_class);
+            preparedStatement.setString(3, first_name);
+            preparedStatement.setString(4, last_name);
+            preparedStatement.setInt(5, age);
+            preparedStatement.setInt(6, group_num);
+            preparedStatement.setInt(7, ticket_num);
+
+
+            x = preparedStatement.executeUpdate();
+
+        } catch (SQLException exc) {
+            System.out.println("Exception occurred");
+            exc.printStackTrace();
+        } catch (ClassNotFoundException e){
+            System.out.println("Exception occurred - driver not found on classpath");
+            e.printStackTrace();
+        } finally {
+            try {
+                preparedStatement.close();
+                // resultSet.close(); (reference)
+                connection.close();
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return x;
+    }
     //queryPassenger(...)
     //updatePassenger(...)
     //deletePassenger(...)
