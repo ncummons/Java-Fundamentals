@@ -1,122 +1,136 @@
 package labs_examples.datastructures.hashmap.labs;
 
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  *      HashMaps Exercise_02
  *
  *      Rewrite the CustomHashMap class to meet the following requirements:
- *      1) no method has the same name as any in CustomHashMap
- *          (do not use refactor - do it manually)
- *      2) no variable has the same name as any in CustomHashMap
- *          (do not use refactor - do it manually)
- *      3) resize the HashMap when the underlying array is more than half full
- *      4) triple the size of the underlying array on resize()
- *      5) instead of checking the number of keys to resize, check the number of values
- *      6) on collisions, add new elements to the front of the LinkedList, not the end
- *      7) anytime someone tries to get/update/remove an element that does not exist, print
- *          out a message indicating that the element does not exist
- *      8) add at least one more method that you think could be useful to the HashMap
- *          review Java's built-in HashMap for inspiration
+ *          1) no method has the same name as any in CustomHashMap
+ *              (do not use refactor - do it manually)
+ *          2) no variable has the same name as any in CustomHashMap
+ *              (do not use refactor - do it manually)
+ *          3) resize the HashMap when the underlying array is more than half full
+ *          4) triple the size of the underlying array on resize()
+ *          5) instead of checking the number of keys to resize, check the number of values
+ *          6) on collisions, add new elements to the front of the LinkedList, not the end
+ *          7) anytime someone tries to get/update/remove an element that does not exist, print
+ *              out a message indicating that the element does not exist
+ *          8) add at least one more method that you think could be useful to the HashMap
+ *              review Java's built-in HashMap for inspiration
+ *              -- added isEmpty() and size()
  */
 
 class CustomHashMap<K,V> {
-    private Entry<K,V>[] table = new Entry[10];
+    private Entry<K,V>[] theMap = new Entry[10];
 
-    private int hash(K key){
-        int index = Math.abs(key.hashCode() % table.length);
-        return index;
+    private int slash(K key){
+        int numba = Math.abs(key.hashCode() % theMap.length);
+        return numba;
     }
 
-    public void put(K key, V value){
-        int index = hash(key);
-        Entry<K, V> entry = new Entry<>(key, value);
+    public void place(K key, V value){
+        int numba = slash(key);
+        Entry<K, V> thisOne = new Entry<>(key, value);
 
-        if (table[index] == null){
-            table[index] = entry;
+        if (theMap[numba] == null){
+            theMap[numba] = thisOne;
         } else{
-            Entry<K,V> p = table[index];
-            while(p.next != null){
-                p = p.next;
-            }
-            p.next = entry;
+            Entry<K,V> node = theMap[numba];
+            theMap[numba] = thisOne;
+            theMap[numba].next = node;
+            /** while(node.next != null){
+            //    node = node.next;
+            // }
+            // node.next = thisOne; */
         }
-        if (keys().size() > table.length * .75){
-            resize();
+        if (size() > theMap.length * .5){
+            makeBigger();
         }
     }
 
-    private void resize(){
-        Entry<K,V>[] old = table;
-        table = new Entry[old.length * 2];
+    private void makeBigger(){
+        Entry<K,V>[] obsolete = theMap;
+        theMap = new Entry[obsolete.length * 3];
 
-        for(int i = 0; i <old.length; i++){
+        for(int i = 0; i <obsolete.length; i++){
             try{
-                Entry entry = old[i];
-                put((K) entry.getKey(), (V) entry.getValue());
+                Entry thisOne = obsolete[i];
+                place((K) thisOne.getKey(), (V) thisOne.getValue());
 
-                while (entry.next != null) {
-                    entry = entry.next;
-                    put((K) entry.getKey(), (V) entry.getValue());
+                while (thisOne.next != null) {
+                    thisOne = thisOne.next;
+                    place((K) thisOne.getKey(), (V) thisOne.getValue());
                 }
             } catch (Exception e) {
             }
         }
     }
 
-    public V get(K key){
-        int index = hash(key);
+    public V fetch(K key){
+        int numba = slash(key);
 
-        if(table[index] == null){
+        if(theMap[numba] == null){
             return null;
         }
-        Entry<K, V> entry = table[index];
+        Entry<K, V> thisOne = theMap[numba];
 
-        while(entry.getKey() != key){
-            if(entry.next == null){
+        while(thisOne.getKey() != key){
+            if(thisOne.next == null){
+                System.out.println("Error, key does not exist.");
                 return null;
             }
-            entry = entry.next;
+            thisOne = thisOne.next;
         }
-        return entry.getValue();
+        return thisOne.getValue();
     }
 
-    public void remove(K key){
-        if (get(key) == null){
+    public void rip(K key){
+        if (fetch(key) == null){
             return;
         }
-        int index = hash(key);
-        Entry<K,V> entry = table[index];
+        int numba = slash(key);
+        Entry<K,V> thisOne = theMap[numba];
 
-        if(entry.getKey().equals(key)){
-            table[index] = null;
+        if(thisOne.getKey().equals(key)){
+            theMap[numba] = null;
         }
-        while(entry.next != null) {
-            if(entry.next.getKey() != key){
-                entry = entry.next;
+        while(thisOne.next != null) {
+            if(thisOne.next.getKey() != key){
+                thisOne = thisOne.next;
             }
         }
-        if(entry.next.next != null){
-            entry.next = entry.next.next;
+        if(thisOne.next.next != null){
+            thisOne.next = thisOne.next.next;
         }
         else{
-            entry.next = null;
+            thisOne.next = null;
         }
     }
 
-    public LinkedList<K> keys(){
-        LinkedList<K> keys = new LinkedList<>();
+    public LinkedList<V> makeMyValuesIntoALinkedList(){
+        LinkedList<V> vals = new LinkedList<>();
 
-        for (int i = 0; i < table.length; i++){
-            if(table[i] != null){
-                Entry<K,V> p = table[i];
-                while(p != null){
-                    keys.add(p.getKey());
-                    p = p.next;
+        for (int i = 0; i < theMap.length; i++){
+            if(theMap[i] != null){
+                Entry<K,V> node = theMap[i];
+                while(node != null){
+                    vals.add(node.getValue());
+                    node = node.next;
                 }
             }
         }
-        return keys;
+        return vals;
+    }
+
+    public boolean isEmpty(){
+        return size() == 0;
+    }
+
+    public int size(){
+        int size = makeMyValuesIntoALinkedList().size();
+        return size;
     }
 
 }
