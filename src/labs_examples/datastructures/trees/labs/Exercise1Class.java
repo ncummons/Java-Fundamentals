@@ -1,5 +1,7 @@
 package labs_examples.datastructures.trees.labs;
 
+import java.util.Stack;
+
 public class Exercise1Class {
     public static void main(String[] args) {
 
@@ -10,8 +12,13 @@ public class Exercise1Class {
         int getting = myTree.get(4);
         System.out.println("I have retrieved the value: " + getting);
         boolean updating = myTree.update(1,12341);
-        System.out.println("Updating value at the key of 1. Successful: " + updating);
+        System.out.println("Updating value at the data of 1. Successful: " + updating);
         myTree.remove(1);
+        myTree.printInOrder(myTree.root);
+        System.out.println();
+        myTree.printPreOrder(myTree.root);
+        System.out.println();
+        myTree.printPostOrder(myTree.root);
     }
 }
 
@@ -19,6 +26,33 @@ class CustomBinarySearchTree{
 
     Node root;
     int size;
+
+    public void printInOrder(Node node){
+        if(node == null){
+            return;
+        }
+        printInOrder(node.leftChild);
+        System.out.print(node.data + " ");
+        printInOrder(node.rightChild);
+    }
+
+    public void printPreOrder(Node node){
+        if(node == null){
+            return;
+        }
+        System.out.print(node.data + " ");
+        printInOrder(node.leftChild);
+        printInOrder(node.rightChild);
+    }
+
+    public void printPostOrder(Node node){
+        if(node == null){
+            return;
+        }
+        printInOrder(node.leftChild);
+        printInOrder(node.rightChild);
+        System.out.print(node.data + " ");
+    }
 
     public void insert(int data) {
 
@@ -51,7 +85,7 @@ class CustomBinarySearchTree{
             // recursive call - passing the left child Node (effectively traversing left)
             node.rightChild = insert(data, node.rightChild);
         }
-        // if data is not < or > node.data it must be equal to - we prevent duplicates (keys) which break the tree
+        // if data is not < or > node.data it must be equal to - we prevent duplicates (datas) which break the tree
         else {
             return node;
         }
@@ -61,20 +95,20 @@ class CustomBinarySearchTree{
         return rebalanceInsert(node, data);
     }
 
-    boolean update(int oldData, int newData){
-        return update(oldData, newData, root);
+    boolean update(int olddata, int newdata){
+        return update(olddata, newdata, root);
     }
 
-    boolean update(int oldData, int newData, Node node){
+    boolean update(int olddata, int newdata, Node node){
         if(node != null){
-            if(node.data == oldData){
+            if(node.data == olddata){
                 remove(node.data);
-                insert(newData);
+                insert(newdata);
                 return true;
-            } else if (oldData < node.data) {
-                return update(oldData, newData, node.leftChild);
-            } else if (oldData > node.data) {
-                return update(oldData, newData, node.rightChild);
+            } else if (olddata < node.data) {
+                return update(olddata, newdata, node.leftChild);
+            } else if (olddata > node.data) {
+                return update(olddata, newdata, node.rightChild);
             }
         }
         return false;
@@ -362,6 +396,7 @@ class CustomBinarySearchTree{
         Node leftChild;
         Node rightChild;
         int data;
+
         int height;
 
         Node (int data) {
