@@ -10,7 +10,7 @@ public class Exercise1Class {
     public static void main(String[] args) {
 
 
-        CustomBinarySearchTreeValue myTree = new CustomBinarySearchTreeValue(3, 7, 5, 1, 8, 2, 7, 10);
+        CustomBinarySearchTree myTree = new CustomBinarySearchTree(3, 7, 5, 1, 8, 2, 7, 10);
         myTree.insert(11);
         System.out.println("My tree is balanced: " + myTree.isBalanced());
         int getting = myTree.get(4);

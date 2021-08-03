@@ -8,21 +8,6 @@ package labs_examples.datastructures.trees.labs;
 
 public class CopyExercise1Class {
     public static void main(String[] args) {
-
-
-        CustomBinarySearchTreeValue myTree = new CustomBinarySearchTreeValue(3, 7, 5, 1, 8, 2, 7, 10);
-        myTree.insert(11);
-        System.out.println("My tree is balanced: " + myTree.isBalanced());
-        int getting = myTree.get(4);
-        System.out.println("I have retrieved the value: " + getting);
-        boolean updating = myTree.update(1,12341);
-        System.out.println("Updating value at the data of 1. Successful: " + updating);
-        myTree.remove(1);
-        myTree.printInOrder(myTree.root);
-        System.out.println();
-        myTree.printPreOrder(myTree.root);
-        System.out.println();
-        myTree.printPostOrder(myTree.root);
     }
 }
 
@@ -31,63 +16,63 @@ class CustomBinarySearchTreeValue {
     Node root;
     int size;
 
-    public void printInOrder(Node node){
+    public void printInOrderCopy(Node node){
         if(node == null){
             return;
         }
-        printInOrder(node.leftChild);
-        System.out.print(node.data + " ");
-        printInOrder(node.rightChild);
+        printInOrderCopy(node.leftChild);
+        System.out.print(node.key + " ");
+        printInOrderCopy(node.rightChild);
     }
 
-    public void printPreOrder(Node node){
+    public void printPreOrderCopy(Node node){
         if(node == null){
             return;
         }
-        System.out.print(node.data + " ");
-        printInOrder(node.leftChild);
-        printInOrder(node.rightChild);
+        System.out.print(node.key + " ");
+        printInOrderCopy(node.leftChild);
+        printInOrderCopy(node.rightChild);
     }
 
-    public void printPostOrder(Node node){
+    public void printPostOrderCopy(Node node){
         if(node == null){
             return;
         }
-        printInOrder(node.leftChild);
-        printInOrder(node.rightChild);
-        System.out.print(node.data + " ");
+        printInOrderCopy(node.leftChild);
+        printInOrderCopy(node.rightChild);
+        System.out.print(node.key + " ");
     }
 
-    public void insert(int data) {
+    public void insertCopy(int key, int value) {
 
         // if the tree is empty, create a new root node
         if (root == null) {
-            root = new Node(data);
+            root = new Node(key, value);
             size++;
         }
         // start the recursive insert() method, passing the data and the "root" node
         else {
-            insert(data, root);
+            insertCopy(key, value, root);
         }
     }
 
-    private Node insert(int data, Node node) {
+    private Node insertCopy(int key, int value, Node node) {
 
         // create new root node
         if (node == null) {
-            node = new Node(data);
+            node = new Node(key, value);
             size++;
         }
 
         // move to leftChild of tree
-        if (data < node.data) {
+        if (key < node.key) {
             // recursive call - passing the left child Node (effectively traversing left)
-            node.leftChild = insert(data, node.leftChild);
+            node.leftChild = insertCopy(key, value, node.leftChild);
         }
         // move to rightChild of tree
-        else if (data > node.data){
-            // recursive call - passing the left child Node (effectively traversing left)
-            node.rightChild = insert(data, node.rightChild);
+        else if (key > node.key){
+            // recursive call - passing the right child Node (effectively traversing right)
+            node.rightChild = insertCopy(key, value, node.rightChild);
         }
         // if data is not < or > node.data it must be equal to - we prevent duplicates (datas) which break the tree
         else {
@@ -96,50 +81,51 @@ class CustomBinarySearchTreeValue {
 
         // once we find the proper node where we should insert the data, call rebalanceInsert() which will
         // continuously attempt to keep the Tree in balance
-        return rebalanceInsert(node, data);
+        return rebalanceInsertCopy(node, key);
     }
 
-    boolean update(int olddata, int newdata){
-        return update(olddata, newdata, root);
+    boolean updateCopy(int key, int value){
+        return updateCopy(key, value, root);
     }
 
-    boolean update(int olddata, int newdata, Node node){
+    boolean updateCopy(int key, int value, Node node){
         if(node != null){
-            if(node.data == olddata){
-                remove(node.data);
-                insert(newdata);
+            if(node.key == key){
+                int temp = node.key;
+                removeCopy(node.key);
+                insertCopy(temp, value);
                 return true;
-            } else if (olddata < node.data) {
-                return update(olddata, newdata, node.leftChild);
-            } else if (olddata > node.data) {
-                return update(olddata, newdata, node.rightChild);
+            } else if (key < node.key) {
+                return updateCopy(key, value, node.leftChild);
+            } else if (key > node.key) {
+                return updateCopy(key, value, node.rightChild);
             }
         }
         return false;
     }
 
-    int get(int data){
-        return get(data, root);
+    int getCopy(int key){
+        return getCopy(key, root);
     }
 
-    int get(int data, Node node){
+    int getCopy(int key, Node node){
         if(node != null){
-            if(node.data == data){
-                return node.data;
-            } else if (data < node.data) {
-                return get(data, node.leftChild);
-            } else if (data > node.data) {
-                return get(data, node.rightChild);
+            if(node.key == key){
+                return node.key;
+            } else if (key < node.key) {
+                return getCopy(key, node.leftChild);
+            } else if (key > node.key) {
+                return getCopy(key, node.rightChild);
             }
         }
         return 0;
     }
 
-    private Node rebalanceInsert(Node node, int data) {
+    private Node rebalanceInsertCopy(Node node, int data) {
 
         // get heights of child nodes
-        int leftHeight = height(node.leftChild);
-        int rightHeight = height(node.rightChild);
+        int leftHeight = heightCopy(node.leftChild);
+        int rightHeight = heightCopy(node.rightChild);
 
         // update height of node to the greatest of its child heights
         node.height = 1 + Math.max(leftHeight, rightHeight);
@@ -149,35 +135,35 @@ class CustomBinarySearchTreeValue {
 
         // leftChild is bigger and new node is less than leftChild - we need to move the current node.leftChild so that
         // it will become node.rightChild and the new node that we're inserting will become node.leftChild
-        if (balanceFactor > 1 && data < node.leftChild.data) {
+        if (balanceFactor > 1 && data < node.leftChild.key) {
             //
-            return rotateRight(node);
+            return rotateRightCopy(node);
         }
         // rightChild is bigger and new node is greater than rightChild - inverse of above section - need to move
         // current right child to left child because the node we're inserting is larger than right chuild
-        if (balanceFactor < -1 && data > node.rightChild.data) {
+        if (balanceFactor < -1 && data > node.rightChild.key) {
             //
-            return rotateLeft(node);
+            return rotateLeftCopy(node);
         }
         // leftChild is bigger and new node is greater than leftChild
-        if (balanceFactor > 1 && data > node.leftChild.data) {
+        if (balanceFactor > 1 && data > node.leftChild.key) {
             // rotate leftChild first to get to simple case
-            node.leftChild = rotateLeft(node.leftChild);
+            node.leftChild = rotateLeftCopy(node.leftChild);
             // then do simple rotation
-            return rotateRight(node);
+            return rotateRightCopy(node);
         }
         // rightChild is bigger and new node is less than rightChild
-        if (balanceFactor < -1 && data < node.rightChild.data) {
+        if (balanceFactor < -1 && data < node.rightChild.key) {
             // rotate rightChild first to get to simple case
-            node.rightChild = rotateRight(node.rightChild);
+            node.rightChild = rotateRightCopy(node.rightChild);
             // then do simple rotation
-            return rotateLeft(node);
+            return rotateLeftCopy(node);
         }
 
         return node;
     }
 
-    private Node rotateRight(Node node) {
+    private Node rotateRightCopy(Node node) {
         // copy node's leftChild child (which will become the root node of this subtree)
         Node child = node.leftChild;
         // make a backup of right child (the right child is about to be overwritten)
@@ -189,19 +175,19 @@ class CustomBinarySearchTreeValue {
         node.leftChild = formerRightChild;
 
         // update heights
-        int leftHeight = height(node.leftChild);
-        int rightHeight = height(node.rightChild);
+        int leftHeight = heightCopy(node.leftChild);
+        int rightHeight = heightCopy(node.rightChild);
         node.height = 1 + Math.max(leftHeight, rightHeight);
 
-        leftHeight = height(child.leftChild);
-        rightHeight = height(child.rightChild);
+        leftHeight = heightCopy(child.leftChild);
+        rightHeight = heightCopy(child.rightChild);
         child.height = 1 + Math.max(leftHeight, rightHeight);
 
         node = child;
         return node;
     }
 
-    private Node rotateLeft(Node node) {
+    private Node rotateLeftCopy(Node node) {
         // copy node's right child (which will become the root node of this subtree)
         Node child = node.rightChild;
         // make a backup of left child (the left child is about to be overwritten)
@@ -213,64 +199,64 @@ class CustomBinarySearchTreeValue {
         node.rightChild = grandChild;
 
         // update heights
-        int leftHeight = height(node.leftChild);
-        int rightHeight = height(node.rightChild);
+        int leftHeight = heightCopy(node.leftChild);
+        int rightHeight = heightCopy(node.rightChild);
         node.height = 1 + Math.max(leftHeight, rightHeight);
 
-        leftHeight = height(child.leftChild);
-        rightHeight = height(child.rightChild);
+        leftHeight = heightCopy(child.leftChild);
+        rightHeight = heightCopy(child.rightChild);
         child.height = 1 + Math.max(leftHeight, rightHeight);
 
         node = child;
         return node;
     }
 
-     boolean search(int target) {
+     boolean searchCopy(int target) {
         // call the search helper (recursive) method
-        return search(target, root);
+        return searchCopy(target, root);
     }
 
-    boolean search(int target, Node node) {
+    boolean searchCopy(int target, Node node) {
         // make sure end of branch hasn't been reached
         if (node != null) {
-            if (node.data == target) {
+            if (node.key == target) {
                 // target found - return true - it does exist
                 return true;
             }
             // follow the leftChild branch
-            else if (target < node.data) {
-                return search(target, node.leftChild);
+            else if (target < node.key) {
+                return searchCopy(target, node.leftChild);
             }
             // follow the rightChild branch
-            else if (target > node.data) {
-                return search(target, node.rightChild);
+            else if (target > node.key) {
+                return searchCopy(target, node.rightChild);
             }
         }
 
         return false;
     }
 
-    public void remove(int target) {
+    public void removeCopy(int target) {
 
         // make sure node exists - if it doesn't
-        if (!search(target)) {
+        if (!searchCopy(target)) {
             return;
         }
 
         // start the recursive helper method
         System.out.println("removing " + target);
-        root = remove(target, root);
+        root = removeCopy(target, root);
     }
 
-    private Node remove(int target, Node node) {
+    private Node removeCopy(int target, Node node) {
 
         // move recursively leftChild
-        if (target < node.data) {
-            node.leftChild = remove(target, node.leftChild);
+        if (target < node.key) {
+            node.leftChild = removeCopy(target, node.leftChild);
         }
         // move recursively rightChild
-        else if (target > node.data){
-            node.rightChild = remove(target, node.rightChild);
+        else if (target > node.key){
+            node.rightChild = removeCopy(target, node.rightChild);
         }
         // currently at the target Node
         else {
@@ -307,24 +293,24 @@ class CustomBinarySearchTreeValue {
                 }
 
                 // swap current data with smallest
-                int temp = node.data;
-                node.data = smallest.data;
-                smallest.data = temp;
+                int temp = node.key;
+                node.key = smallest.key;
+                smallest.key = temp;
 
                 // remove old smallest node
-                node.rightChild = remove(target, node.rightChild);
+                node.rightChild = removeCopy(target, node.rightChild);
             }
 
         }
 
-        return rebalanceRemove(node);
+        return rebalanceRemoveCopy(node);
     }
 
-    private Node rebalanceRemove(Node node) {
+    private Node rebalanceRemoveCopy(Node node) {
 
         // update height
-        int leftHeight = height(node.leftChild);
-        int rightHeight = height(node.rightChild);
+        int leftHeight = heightCopy(node.leftChild);
+        int rightHeight = heightCopy(node.rightChild);
         node.height = 1 + Math.max(leftHeight, rightHeight);
 
         // calculate balance factor of node
@@ -334,8 +320,8 @@ class CustomBinarySearchTreeValue {
         leftHeight = 0;
         rightHeight = 0;
         if (node.leftChild != null) {
-            leftHeight = height(node.leftChild.leftChild);
-            rightHeight = height(node.leftChild.rightChild);
+            leftHeight = heightCopy(node.leftChild.leftChild);
+            rightHeight = heightCopy(node.leftChild.rightChild);
         }
         int balanceLeft = leftHeight - rightHeight;
 
@@ -343,32 +329,32 @@ class CustomBinarySearchTreeValue {
         leftHeight = 0;
         rightHeight = 0;
         if (node.rightChild != null) {
-            leftHeight = height(node.rightChild.leftChild);
-            rightHeight = height(node.rightChild.rightChild);
+            leftHeight = heightCopy(node.rightChild.leftChild);
+            rightHeight = heightCopy(node.rightChild.rightChild);
         }
         int balanceRight = leftHeight - rightHeight;
 
         // rebalance
         if (balanceFactor > 1 && balanceLeft >= 0) {
-            return rotateRight(node);
+            return rotateRightCopy(node);
         }
         if (balanceFactor > 1 && balanceLeft < 0) {
-            node.leftChild = rotateLeft(node.leftChild);
-            return rotateRight(node);
+            node.leftChild = rotateLeftCopy(node.leftChild);
+            return rotateRightCopy(node);
         }
         if (balanceFactor < -1 && balanceRight <= 0) {
-            node =  rotateLeft(node);
+            node =  rotateLeftCopy(node);
             return node;
         }
         if (balanceFactor < -1 && balanceRight > 0) {
-            node.rightChild = rotateRight(node.rightChild);
-            return rotateLeft(node);
+            node.rightChild = rotateRightCopy(node.rightChild);
+            return rotateLeftCopy(node);
         }
 
         return node;
     }
 
-    private int height(Node node){
+    private int heightCopy(Node node){
         if (node == null){
             return 0;
         }
@@ -376,22 +362,22 @@ class CustomBinarySearchTreeValue {
     }
 
     public boolean isBalanced(){
-        int balanceFactor = height(root.leftChild) - height(root.rightChild);
+        int balanceFactor = heightCopy(root.leftChild) - heightCopy(root.rightChild);
         return Math.abs(balanceFactor) <= 1;
     }
 
-    CustomBinarySearchTreeValue(int ... data) {
+    CustomBinarySearchTreeValue(int ... values) {
 
         // if the user passes no data to insert, simply initialize an empty tree
-        if (data.length < 1) {
+        if (values.length < 1) {
             root = null;
         }
 
         // otherwise, initialize tree with given data
         else {
-            for (int i = 0; i < data.length; i++) {
+            for (int i = 0; i < values.length; i++) {
                 // for each int data that the user passed in, call the insert() method and pass each int
-                insert(data[i]);
+                insertCopy(i, values[i]);
             }
         }
     }
@@ -399,12 +385,14 @@ class CustomBinarySearchTreeValue {
     private class Node {
         Node leftChild;
         Node rightChild;
-        int data;
+        int key;
+        int value;
 
         int height;
 
-        Node (int data) {
-            this.data = data;
+        Node (int key, int value) {
+            this.key = key;
+            this.value = value;
             this.height = 1;
         }
     }
