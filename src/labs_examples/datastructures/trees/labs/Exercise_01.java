@@ -10,7 +10,7 @@ package labs_examples.datastructures.trees.labs;
             3.) Retrieve elements
             4.) Update elements
             5.) Delete elements
-        6.) Print elements (Bonus: try in-order traversal, pre-order traversal, post-order traversal)
+            6.) Print elements (Bonus: try in-order traversal, pre-order traversal, post-order traversal)
             7.) Keep the tree well balanced
 
  */

@@ -6,7 +6,7 @@ package labs_examples.datastructures.trees.labs;
  *
  */
 
-public class Exercise1Class {
+public class CopyExercise1Class {
     public static void main(String[] args) {
 
 
@@ -26,7 +26,7 @@ public class Exercise1Class {
     }
 }
 
-class CustomBinarySearchTree{
+class CustomBinarySearchTreeValue {
 
     Node root;
     int size;
@@ -380,7 +380,7 @@ class CustomBinarySearchTree{
         return Math.abs(balanceFactor) <= 1;
     }
 
-    CustomBinarySearchTree(int ... data) {
+    CustomBinarySearchTreeValue(int ... data) {
 
         // if the user passes no data to insert, simply initialize an empty tree
         if (data.length < 1) {
